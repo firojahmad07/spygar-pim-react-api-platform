@@ -49,6 +49,7 @@ class CategoryRepository extends ServiceEntityRepository
 
         return $translations;
     }
+    
     //    /**
     //     * @return Category[] Returns an array of Category objects
     //     */

@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Repository\Catalog\LocaleRepository;
 use App\Repository\Catalog\CategoryRepository;
+use App\Repository\Setting\ChannelRepository;
 use App\Repository\Catalog\CurrencyRepository;
 use Symfony\Component\HttpKernel\KernelInterface;
 use App\Installer\Reader\CsvFileReader;
@@ -24,12 +25,14 @@ class SpygarPimInstallCommand extends Command
     CONST LOCALE_FIXTURE_DATA = '/src/Installer/fixtures/locales.csv';
     CONST CURRENCY_FIXTURE_DATA = '/src/Installer/fixtures/currencies.csv';
     CONST CATEGORY_FIXTURE_DATA = '/src/Installer/fixtures/categories.csv';
+    CONST CHANNEL_FIXTURE_DATA = '/src/Installer/fixtures/channels.csv';
     public function __construct(
         private KernelInterface $kernel,
         private CsvFileReader $csvFileReader,
         private LocaleRepository $localeRepository,
         private CurrencyRepository $currencyRepository,
-        private CategoryRepository $categoryRepository
+        private CategoryRepository $categoryRepository,
+        private ChannelRepository $channelRepository
     )
     {
         parent::__construct();
@@ -47,7 +50,8 @@ class SpygarPimInstallCommand extends Command
     {
         // $this->loadLocales();
         // $this->loadCurrencies();
-        $this->loadCategories();
+        // $this->loadCategories();
+        $this->loadChannels();
 
         $io = new SymfonyStyle($input, $output);
 
@@ -78,6 +82,14 @@ class SpygarPimInstallCommand extends Command
         $records = $this->csvFileReader->read($this->kernel->getProjectDir() . self::CATEGORY_FIXTURE_DATA, ";");
         foreach($records as $record) {
             $this->categoryRepository->saveData($record);
+        }
+    }
+    public function loadChannels()
+    {
+        $records = $this->csvFileReader->read($this->kernel->getProjectDir() . self::CHANNEL_FIXTURE_DATA, ";");
+        
+        foreach($records as $record) {
+            $this->channelRepository->saveData($record);
         }
     }
 }

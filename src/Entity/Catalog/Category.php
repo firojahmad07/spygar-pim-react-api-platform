@@ -70,12 +70,14 @@ class Category
     #[Groups(['category:read', 'category:read-single', 'category:partial-update'])]
     private ?array $translations = null;
 
-    #[ORM\OneToOne(mappedBy: 'categoryTree', cascade: ['persist', 'remove'])]
-    private ?Channel $channel = null;
+    #[ORM\ManyToMany(targetEntity: Channel::class, inversedBy: "categories")]
+    #[ORM\JoinTable(name: "category_channel")]
+    private Collection $channels;
 
     public function __construct()
     {
         $this->children = new ArrayCollection();
+        $this->channels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,20 +138,26 @@ class Category
         return $this;
     }
 
-    public function getChannel(): ?Channel
+    public function getChannels(): Collection
     {
-        return $this->channel;
+        return $this->channels;
     }
 
-    public function setChannel(Channel $channel): static
+    public function addChannel(Channel $channel): self
     {
-        // set the owning side of the relation if necessary
-        if ($channel->getCategoryTree() !== $this) {
-            $channel->setCategoryTree($this);
+        if (!$this->channels->contains($channel)) {
+            $this->channels->add($channel);
+            $channel->addCategory($this);
         }
+        return $this;
+    }
 
-        $this->channel = $channel;
-
+    public function removeChannel(Channel $channel): self
+    {
+        if ($this->channels->contains($channel)) {
+            $this->channels->removeElement($channel);
+            $channel->removeCategory($this);
+        }
         return $this;
     }
 }
