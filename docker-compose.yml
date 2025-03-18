@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  php:
+    build: .
+    container_name: php
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "9001:9001" # store port
+      - "9002:9002" # admin port
+    networks:
+      - symfony
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    volumes:
+      - ./:/var/www/html
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:80"
+    depends_on:
+      - php
+    networks:
+      - symfony
+
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: spygar_docker_edition_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin123
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - symfony
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+    networks:
+      - symfony
+
+volumes:
+  db_data:
+
+networks:
+  symfony:
+    driver: bridge

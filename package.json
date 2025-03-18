@@ -1,0 +1,9 @@
+{
+  "name": "spygar-pim-react-api-platform",
+  "private": true,
+  "version": "9.1.2",
+  "type": "module",
+  "scripts": {
+    "build": "npm --prefix front-packages/admin run build && npm --prefix front-packages/shop run build"
+  }
+}
