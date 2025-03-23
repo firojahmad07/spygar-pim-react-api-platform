@@ -180,7 +180,7 @@ const Users = () => {
         <h3 className="card-title font-medium text-sm">Showing 20 of 68 users</h3>
 
         <div className="flex flex-wrap gap-2 lg:gap-5">
-        <div className="flex">
+          <div className="flex">
             <label className="input input-sm">
               <KeenIcon icon="magnifier" />
               <input

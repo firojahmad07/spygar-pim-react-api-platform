@@ -28,8 +28,8 @@ const DataGridTable = <TData,>() => {
 
   return (
     <table
-      className={cn(
-        'w-full align-middle text-left rtl:text-right caption-bottom text-sm',
+      className={cn(        
+        'table text-gray-700 font-medium w-full align-middle text-left rtl:text-right caption-bottom text-sm',
         props.layout?.classes?.table
       )}
       data-table
@@ -39,8 +39,7 @@ const DataGridTable = <TData,>() => {
           <tr
             key={headerGroup.id}
             className={cn(
-              'border-b bg-muted/30 data-[state=selected]:bg-muted',
-              cellBorder && '[&_>:last-child]:border-e-0'
+              'border-b bg-muted/30 data-[state=selected]:bg-muted'              
             )}
           >
             {headerGroup.headers.map((header) => (
@@ -49,7 +48,6 @@ const DataGridTable = <TData,>() => {
                 colSpan={header.colSpan}
                 className={cn(
                   headCellSpacing,
-                  cellBorder && 'border-e',
                   'h-12 text-left rtl:text-right align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pe-0',
                   header.column.columnDef.meta?.headerClassName
                 )}
@@ -69,8 +67,7 @@ const DataGridTable = <TData,>() => {
               key={row.id}
               data-state={row.getIsSelected() ? 'selected' : undefined}
               className={cn(
-                'border-b hover:bg-muted/30 data-[state=selected]:bg-muted/50',
-                cellBorder && '[&_>:last-child]:border-e-0'
+                'border-b hover:bg-muted/30 data-[state=selected]:bg-muted/50'
               )}
             >
               {row.getVisibleCells().map((cell: Cell<TData, unknown>) => (
@@ -78,7 +75,6 @@ const DataGridTable = <TData,>() => {
                   key={cell.id}
                   className={cn(
                     bodyCellSpacing,
-                    cellBorder && 'border-e',
                     'align-middle [&:has([role=checkbox])]:pe-0',
                     cell.column.columnDef.meta?.cellClassName
                   )}

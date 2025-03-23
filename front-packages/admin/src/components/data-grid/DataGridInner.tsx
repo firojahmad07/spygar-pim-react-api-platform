@@ -25,7 +25,7 @@ const DataGridInner = () => {
       {props.toolbar && props.toolbar}
       <div
         className={cn(
-          'relative w-full scrollable-x-auto border rounded-md',
+          'relative w-full scrollable-x-auto border',
           props.layout?.classes?.container
         )}
         data-container

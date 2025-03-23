@@ -60,7 +60,7 @@ const SidebarMenuDashboard = () => {
 
   const contextData = useContext(SidebarContext);
   const sideBarDataAvailable = contextData?.sidebarMenu.length != 0 ? true : false;
-  console.log('contextData : ', contextData, sideBarDataAvailable);
+  
   const buildDropdown = () => {
     return (
       <Menu highlight={true} className="menu-default p-0 w-full px-2">

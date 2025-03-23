@@ -2,8 +2,11 @@ import { Route, Routes, Outlet, Navigate } from 'react-router-dom'
 import { useContext, useEffect, useMemo } from 'react';
 import { SidebarContext } from '@/layouts/admin/DashboardLayoutProvider';
 import {
-    WorkFlowDasbhard
-} from '@/pages/workflow/WorkFlowDasbhard';
+    UserContainer,
+    RoleContainer,
+    CatalogMonitoring,
+    SystemConfiguration
+} from './index';
 
 const SystemIndex = () => {
     const context = useContext(SidebarContext)
@@ -35,12 +38,12 @@ const SystemIndex = () => {
     return (
         <Routes>
             <Route>
-                <Route path='/catalog-monintoring' element={ <WorkFlowDasbhard /> } />
-                <Route path='/configuration' element={ <WorkFlowDasbhard /> } />
+                <Route path='/catalog-monintoring' element={ <CatalogMonitoring /> } />
+                <Route path='/configuration' element={ <SystemConfiguration /> } />
                 {/* user navigation */}
-                <Route path='/users' element={ <WorkFlowDasbhard /> } />
-                <Route path='/roles' element={ <WorkFlowDasbhard /> } />
-                <Route path='/user-groups' element={ <WorkFlowDasbhard /> } />
+                <Route path='/users' element={ <UserContainer /> } />
+                <Route path='/roles' element={ <RoleContainer /> } />
+                <Route path='/user-groups' element={ <UserContainer /> } />
             </Route>
             <Route index element={<Navigate to='/system/catalog-monintoring' />} />
         </Routes>

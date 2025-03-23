@@ -6,6 +6,10 @@ import {
     WorkFlowDasbhard
 } from '@/pages/workflow/WorkFlowDasbhard';
 
+import {
+    Dashboard
+} from './Index';
+
 const ActivityIndex = () => {
     const context = useContext(SidebarContext)
     const sideBarMenuData = useMemo(
@@ -14,8 +18,7 @@ const ActivityIndex = () => {
                 title: "Activity Navigation",
                 children: [
                     { title: "Dashboard", path: "/dashboard" },
-                    { title: "Proposals", path: "/proposals" },
-                    { title: "Process tracker", path: "/account/appearance" },
+                    { title: "Proposals", path: "/proposals" }
                 ],
             },
         ],
@@ -30,7 +33,7 @@ const ActivityIndex = () => {
     return (
         <Routes>
             <Route>
-                <Route path='/dashboard' element={<WorkFlowDasbhard />} />
+                <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/proposals' element={<WorkFlowDasbhard />} />
             </Route>
             <Route index element={<Navigate to='/dashboard' />} />

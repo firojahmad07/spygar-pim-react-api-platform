@@ -9,7 +9,8 @@ import {
   ActivityIndex,
   ProductIndex,
   ShopIndex,
-  BlogIndex
+  BlogIndex,
+  ProductDetails
 } from '@/pages';
 
 
@@ -34,8 +35,10 @@ const AppRoutingSetup = (): ReactElement => {
         <Route path="/products" element={<ProductIndex />} />
         <Route path="/blogs/*" element={<BlogIndex />} />
         <Route path="/shop/*" element={<ShopIndex />} />
-
         <Route path="/account/:id/*" element={<AccountIndex />} />
+        <Route path="/product/:id/*" element={<ProductDetails />} />
+
+
 
       </Route>
       </Route>

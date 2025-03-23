@@ -46,11 +46,11 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['category:read', 'category:read-single'])]
+    #[Groups(['category:read', 'category:read-single', 'channel:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['category:read', 'category:read-single', 'category:write'])]
+    #[Groups(['category:read', 'category:read-single', 'category:write', 'channel:read'])]
     private ?string $code = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: "children")]
@@ -67,7 +67,7 @@ class Category
     private ?\DateTimeInterface $created = null;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
-    #[Groups(['category:read', 'category:read-single', 'category:partial-update'])]
+    #[Groups(['category:read', 'category:read-single', 'category:partial-update', 'channel:read'])]
     private ?array $translations = null;
 
     #[ORM\ManyToMany(targetEntity: Channel::class, inversedBy: "categories")]

@@ -2,7 +2,10 @@ import { Route, Routes, Outlet, Navigate } from 'react-router-dom'
 import { useContext, useEffect, useMemo } from 'react';
 import { SidebarContext } from '@/layouts/admin/DashboardLayoutProvider';
 import {
-    ChannelContainer
+    ChannelContainer,
+    LocaleContainer,
+    CurrencyContainer,
+    CategoryContainer
 } from './index';
 
 const SettingIndex = () => {
@@ -48,10 +51,10 @@ const SettingIndex = () => {
         <Routes>
             <Route>
                 {/* Catalog settings */}
-                <Route path='/categories' element={ <ChannelContainer /> } />
+                <Route path='/categories' element={ <CategoryContainer /> } />
                 <Route path='/channels' element={ <ChannelContainer /> } />
-                <Route path='/locales' element={ <ChannelContainer /> } />
-                <Route path='/currencies' element={ <ChannelContainer /> } />
+                <Route path='/locales' element={ <LocaleContainer /> } />
+                <Route path='/currencies' element={ <CurrencyContainer /> } />
 
                 {/* Catalog settings */}
                 <Route path='/attribute-groups' element={ <ChannelContainer /> } />

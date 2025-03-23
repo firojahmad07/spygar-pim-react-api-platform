@@ -27,7 +27,7 @@ use ApiPlatform\Metadata\ApiFilter;
         )
     ]
 )]
-#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'code' => 'partial'])]
+#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'isActive' => 'exact', 'code' => 'partial'])]
 #[ApiFilter(OrderFilter::class, properties: ['id','isActive'])]
 
 class Currency
