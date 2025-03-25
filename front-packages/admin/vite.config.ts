@@ -25,18 +25,18 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 3000,
-    outDir: '../../public/build/admin/',
-    emptyOutDir: true,
+    outDir: '../../public/',
+    emptyOutDir: false,
     rollupOptions: {
       output: {
-        entryFileNames: 'assets/[name].js', // Custom filename for entry files
-        chunkFileNames: 'assets/[name]-[hash].js', // Custom filename for chunks
+        entryFileNames: 'assets/admin-bundle.js', // Custom filename for entry files
+        chunkFileNames: 'assets/admin-bundle-[hash].js', // Custom filename for chunks
         assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.css')) {
-            return 'assets/[name].css'; // Custom CSS filename
+            return 'assets/admin-bundle.css'; // Custom CSS filename
           }
           
-          return 'assets/[name]-[hash][extname]'; // Default for other assets
+          return 'assets/admin-bundle-[hash][extname]'; // Default for other assets
         }
       }
     }

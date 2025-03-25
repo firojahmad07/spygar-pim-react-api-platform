@@ -26,7 +26,7 @@ const Locales = () => {
 
   useEffect(() => {
     apiFetcher.get("/locales")
-      .then((response) => {
+      .then((response:any) => {
         setItems(response.totalItems);
         setLocalesData(response.member);
       })

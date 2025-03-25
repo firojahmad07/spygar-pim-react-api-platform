@@ -25,17 +25,17 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 3000,
-    outDir: '../../public/build/shop/',
-    emptyOutDir: true,
+    outDir: '../../public',
+    emptyOutDir: false,
     rollupOptions: {
       output: {
-        entryFileNames: 'assets/[name].js', // Custom filename for entry files
-        chunkFileNames: 'assets/[name]-[hash].js', // Custom filename for chunks
+        entryFileNames: 'assets/shop-bundle.js', // Custom filename for entry files
+        chunkFileNames: 'assets/shop-bundle-[hash].js', // Custom filename for chunks
         assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.css')) {
-            return 'assets/[name].css'; // Custom CSS filename
+            return 'assets/shop-bundle.css'; // Custom CSS filename
           }
-          return 'assets/[name]-[hash][extname]'; // Default for other assets
+          return 'assets/shop-bundle-[hash][extname]'; // Default for other assets
         }
       }
     }

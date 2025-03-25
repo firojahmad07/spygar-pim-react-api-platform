@@ -23,7 +23,7 @@ const Users = () => {
 
   useEffect(() => {
     apiFetcher.get("/users")
-      .then((response) => {
+      .then((response:any) => {
         setItems(response.totalItems);
         setUsersData(response.member);
       })

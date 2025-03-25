@@ -6,12 +6,17 @@ import { DataGrid, DataGridColumnHeader, KeenIcon} from '@/components';
 import { ColumnDef} from '@tanstack/react-table';
 const DEFALT_LOCALE_CODE = import.meta.env.VITE_DEFAULT_LOCALE;
 
-
+interface ICategoryData {
+  id: number,
+  code: string
+  translations: []
+}
 // Define the data structure for channels
 interface IChannelsData {
   id: string;
   code: string;
-  categories: [];
+  categories: ICategoryData[];
+  translations: [];
 }
 
 const Channels = () => {
@@ -19,7 +24,7 @@ const Channels = () => {
   const [numberOfItems, setItems] = useState(0);
   useEffect(() => {
     apiFetcher.get("/channels")
-      .then((response) => {
+      .then((response:any) => {
         setItems(response.totalItems);
         setChannelsData(response.member);
       })

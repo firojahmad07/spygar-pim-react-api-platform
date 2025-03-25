@@ -9,6 +9,7 @@ import {
 } from './index';
 
 const SettingIndex = () => {
+    console.log("we are here");
     const context = useContext(SidebarContext)
         const sideBarMenuData = useMemo(
             () => [

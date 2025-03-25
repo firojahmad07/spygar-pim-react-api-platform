@@ -30,7 +30,7 @@ const Currencies = () => {
   const fetchData = async (status: any) => {
     setLoading(true);
     try {
-      const response = await apiFetcher.get(`/currencies?isActive=${status}`);
+      const response:any = await apiFetcher.get(`/currencies?isActive=${status}`);
       setItems(response.totalItems);
       setLocalesData(response.member);
     } catch (error) {

@@ -19,7 +19,7 @@ const Roles = () => {
   const [numberOfItems, setItems] = useState(0);
   useEffect(() => {
     apiFetcher.get("/roles")
-      .then((response) => {
+      .then((response:any) => {
         setItems(response.totalItems);
         setRolesData(response.member);
       })
