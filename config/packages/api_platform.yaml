@@ -1,9 +1,9 @@
 api_platform:
+    version: 1.0.0
     title: Hello API Platform
     # enable_docs: true
     # enable_entrypoint: true
     enable_swagger_ui: true
-    version: 1.0.0
     enable_link_security: true
     formats:
         # multipart: ['multipart/form-data']

@@ -8,23 +8,24 @@ import {
 
 const WorkFlowIndex = () => {
     const context = useContext(SidebarContext)
-        const sideBarMenuData = useMemo(
-            () => [
-                {
-                    title: "Workflow Navigation",
-                    children: [
-                        { title: "Dashboard", path: "/workflow/dashboard" },
-                        { title: "Settings", path: "/workflow/settings" },
-                    ],
-                },
-            ],
-            []
-        );
-        useEffect(() => {
-            if (context?.setSidebarMenu) {
-                context.setSidebarMenu(sideBarMenuData);
-            }
-        }, [context]);
+    const sideBarMenuData = useMemo(
+        () => [
+            {
+                title: "Workflow Navigation",
+                children: [
+                    { title: "Dashboard", path: "/workflow/dashboard" },
+                    { title: "Settings", path: "/workflow/settings" },
+                ],
+            },
+        ],
+        []
+    );
+    useEffect(() => {
+        if (context?.setSidebarMenu) {
+            context.setSidebarMenu(sideBarMenuData);
+        }
+    }, [context]);
+    
     return (
         <Routes>
             <Route>

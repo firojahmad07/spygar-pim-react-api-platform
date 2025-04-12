@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useRef, useContext } from 'react';
 import apiFetcher from '@/fetcher/apiFetcher';
 import { Link } from 'react-router-dom';
-
 import { DataGrid, DataGridColumnHeader, KeenIcon} from '@/components';
 import { ColumnDef} from '@tanstack/react-table';
+import { DeleteConfirmDialog } from '@/pages/products/Modals/DeleteConfirmDialog';
 
 
 // Define the data structure for channels
@@ -20,14 +20,27 @@ const Users = () => {
   const [usersData, setUsersData] = useState([]);
   const [numberOfItems, setItems] = useState(0);
   const [checked, setChecked] = useState(false);
+  const [reportUserModalOpen, setReportUserModalOpen] = useState(false);
+  const itemRef = useRef<any>(null);
+  
+  const handleReportUserModalOpen = () => {
+    setReportUserModalOpen(true);
+    itemRef.current?.hide();
+  };
+  const handleReportUserModalClose = () => {
+    setReportUserModalOpen(false);
+  };
 
-  useEffect(() => {
-    apiFetcher.get("/users")
+  const loadUsers = async () => {
+    await apiFetcher.get("/users")
       .then((response:any) => {
         setItems(response.totalItems);
         setUsersData(response.member);
       })
       .catch(console.error);
+  }
+  useEffect(() => {
+    loadUsers();
   }, []);
 
   const checkedChangeHandler = () => {
@@ -112,6 +125,26 @@ const Users = () => {
         meta: {
           headerClassName: 'min-w-[180px]'
         }
+      },
+      {
+        id: 'edit',
+        header: () => '',
+        enableSorting: false,
+        cell: () => {                    
+          return (
+            <div className="btn">              
+              <button className="btn btn-light btn-sm" onClick={handleReportUserModalOpen}>
+                <i className="ki-filled ki-trash"></i>
+              </button>
+              <Link to={`/account/1/user-profile`} className="btn btn-light btn-sm">
+                <i className="ki-filled ki-pencil"></i>
+              </Link>
+            </div>            
+          );
+        },
+        meta: {
+          headerClassName: 'w-[60px]'
+        }
       }
     ],
     []
@@ -137,7 +170,9 @@ const Users = () => {
             </label>
           </div>
         </div>
+        <DeleteConfirmDialog open={reportUserModalOpen} onOpenChange={handleReportUserModalClose} />
       </div>
+
     );
   };
 

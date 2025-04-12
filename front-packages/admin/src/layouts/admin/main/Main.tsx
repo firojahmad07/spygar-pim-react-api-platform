@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useRef, useState, useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Outlet, useLocation } from 'react-router';
 import { Menu, MenuItem, MenuToggle, useMenuCurrentItem } from '@/components/menu';
@@ -9,6 +9,8 @@ import { KeenIcon } from '@/components';
 import { useResponsive } from '@/hooks';
 import { ModalSearch } from '@/partials/modals/search/ModalSearch';
 import { DropdownNotifications } from '@/partials/dropdowns/notifications';
+import { SidebarContext } from '@/layouts/admin/DashboardLayoutProvider';
+
 
 const Main = () => {
   const mobileMode = useResponsive('down', 'lg');
@@ -22,6 +24,9 @@ const Main = () => {
   const handleClose = () => {
     setSearchModalOpen(false);
   };
+
+  const context = useContext(SidebarContext)
+  console.log("create route", context?.createRoute);
 
   return (
     <Fragment>
