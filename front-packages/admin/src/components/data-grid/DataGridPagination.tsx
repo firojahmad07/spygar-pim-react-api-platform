@@ -16,6 +16,7 @@ const DataGridPagination = () => {
   const btnBaseClasses = 'size-7 p-0 text-[13px]';
   const btnArrowClasses = btnBaseClasses + ' rtl:transform rtl:rotate-180';
   const pageIndex = table.getState().pagination.pageIndex;
+  const views = table;
   const pageSize = table.getState().pagination.pageSize;
   const from = pageIndex * pageSize + 1;
   const to = Math.min((pageIndex + 1) * pageSize, totalRows);
@@ -39,6 +40,7 @@ const DataGridPagination = () => {
   // Render page buttons based on the current group
   const renderPageButtons = () => {
     const buttons = [];
+
     for (let i = currentGroupStart; i < currentGroupEnd; i++) {
       buttons.push(
         <Button
@@ -93,7 +95,7 @@ const DataGridPagination = () => {
       className="flex flex-col md:flex-row justify-between items-center gap-5 md:gap-4"
       data-pagination
     >
-      <div className="flex items-center space-x-2 order-2 md:order-1 pb-2 md:pb-0">
+      {/* <div className="flex items-center space-x-2 order-2 md:order-1 pb-2 md:pb-0">
         <div className="text-sm text-muted-foreground">Rows per page</div>
         <Select
           value={`${table.getState().pagination.pageSize}`}
@@ -112,7 +114,7 @@ const DataGridPagination = () => {
             ))}
           </SelectContent>
         </Select>
-      </div>
+      </div> */}
       <div className="flex items-center gap-2 order-1 md:order-2 pt-2 md:pt-0">
         <div className="text-sm text-muted-foreground">{paginationInfo}</div>
         <div className="flex items-center space-x-1">

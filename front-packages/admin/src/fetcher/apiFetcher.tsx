@@ -12,7 +12,6 @@ const apiFetcher = axios.create({
 // Interceptor to modify headers based on request type
 apiFetcher.interceptors.request.use(
     (config) => {
-
         config.headers['Authorization'] = `Bearer ${authHelper.getAuth()?.token}`;
 
         // Modify headers based on request type

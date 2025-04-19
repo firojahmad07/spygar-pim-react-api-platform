@@ -29,7 +29,12 @@ export interface IDataGridContextProps<TData extends object> {
   setLoading: (state: boolean) => void;
   reload: () => void
 }
-
+interface paginationView {
+  first: string,
+  last: string,
+  next:string,
+  previous?: string
+}
 const DataGridContext = createContext<IDataGridContextProps<any> | undefined>(undefined);
 
 export const useDataGrid = () => {
@@ -52,6 +57,12 @@ export const DataGridProvider = <TData extends object>(props: TDataGridProps<TDa
       card: false
     },
     pagination: {
+      view: {
+        first: "",
+        last: "",
+        next: "",
+        previous: ""
+      },
       info: '{from} - {to} of {count}',
       sizes: [5, 10, 25, 50, 100],
       sizesLabel: 'Show',

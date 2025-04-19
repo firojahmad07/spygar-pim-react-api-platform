@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { useMemo, useState, useEffect } from 'react';
-import apiFetcher from '@/fetcher/apiFetcher';
 import { Link } from 'react-router-dom';
+// Switch
 import {
   Select,
   SelectContent,
@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Switch } from "@radix-ui/react-switch";
+import { Switch } from "@/components/ui/switch"
 
 import { DataGrid, DataGridColumnHeader, KeenIcon} from '@/components';
 import { ColumnDef} from '@tanstack/react-table';
@@ -22,27 +22,19 @@ interface ICurrencyData {
   isActive: boolean
 }
 
-const Currencies = () => {
-  const [localesData, setLocalesData] = useState([]);
-  const [numberOfItems, setItems] = useState(0);
-  const [loading, setLoading] = useState(false);
-
-  const fetchData = async (status: any) => {
-    setLoading(true);
-    try {
-      const response:any = await apiFetcher.get(`/currencies?isActive=${status}`);
-      setItems(response.totalItems);
-      setLocalesData(response.member);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData('all');
-  }, []);
+interface CurrencyInterface {
+  currenciesData: ICurrencyData[],
+  numberOfItems: number,
+  pagination: {
+    first: string,
+    last: string,
+    next: string,
+    previous?: string
+  }
+  onFilterChange: (filters: any) => void;
+}
+const Currencies = ({currenciesData, numberOfItems, pagination, onFilterChange }:CurrencyInterface ) => {
+  const [isActive, setIsActiveStatus] = useState('all');
 
   const columns = useMemo<ColumnDef<ICurrencyData>[]>(
     () => [
@@ -67,7 +59,6 @@ const Currencies = () => {
           let statusColor = info.row.original.isActive ? 'success' : 'danger';
           let statusLabel = info.row.original.isActive ? 'Enabled' : 'Disabled';
           return (
-
             <span className={`badge badge-${statusColor} shrink-0 badge-outline rounded-[0px]`}>
               <span className={`size-1.5 rounded-full bg-${statusColor} me-1.5`}></span>
               {statusLabel}
@@ -77,24 +68,42 @@ const Currencies = () => {
         meta: {
           headerClassName: 'min-w-[180px]'
         }
-      }
+      },
+      {
+            id: 'action',
+            header: () => '',
+            enableSorting: false,
+            cell: (info) => {      
+              return (
+                <Switch
+                  apiUrl={`/currencies/${info.row.original.id}`}
+                  defaultChecked={info.row.original.isActive}
+                  checked={info.row.original.isActive}
+                  payloadKey="isActive"
+                  onFilterChange={onFilterChange}
+                  onToggle={(checked) => console.log('Switched to', checked)}
+                />
+              )
+            },
+            meta: {
+              headerClassName: 'w-[60px]'
+            }
+          }
     ],
     []
   );
 
   type ToolbarProps = {
-    onFilterChange: (status: any) => void;
+    onFilterChange: (filters: any) => void;
   };
   const Toolbar = ({onFilterChange} : ToolbarProps) => {
     const [searchInput, setSearchInput] = useState('');
-    const [isActive, setIsActiveStatus] = useState('all');
     
     const changeHnadler = (value: any) => {
       setIsActiveStatus(value);
-      console.log("update status : ", value);
-      onFilterChange(value) 
+      const filterValue = (value != 'all') ? `?isActive=${value}` : '';
+      onFilterChange(filterValue);
     }
-    console.log("update status 3: ", isActive);
 
     return (
       <div className="card-header flex-wrap gap-2 border-b-0 px-5">
@@ -133,11 +142,11 @@ const Currencies = () => {
   return (
     <DataGrid
       columns={columns}
-      data={localesData}
+      data={currenciesData}
       rowSelection={true}
-      pagination={{ size: 10 }}
-      sorting={[{ id: 'code', desc: false }]}
-      toolbar={<Toolbar onFilterChange={fetchData} />}
+      pagination={{ size: 10, view: pagination } }
+      sorting={[{ id: 'isActive', desc: false }]}
+      toolbar={<Toolbar onFilterChange={onFilterChange} />}
       layout={{ card: false }}
     />
   );

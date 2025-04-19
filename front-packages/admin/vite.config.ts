@@ -29,14 +29,14 @@ export default defineConfig({
     emptyOutDir: false,
     rollupOptions: {
       output: {
-        entryFileNames: 'assets/admin-bundle.js', // Custom filename for entry files
-        chunkFileNames: 'assets/admin-bundle-[hash].js', // Custom filename for chunks
+        entryFileNames: 'build/admin-bundle.js', // Custom filename for entry files
+        chunkFileNames: 'build/admin-bundle-[hash].js', // Custom filename for chunks
         assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.css')) {
-            return 'assets/admin-bundle.css'; // Custom CSS filename
+            return 'build/admin-bundle.css'; // Custom CSS filename
           }
           
-          return 'assets/admin-bundle-[hash][extname]'; // Default for other assets
+          return 'build/admin-bundle-[hash][extname]'; // Default for other assets
         }
       }
     }

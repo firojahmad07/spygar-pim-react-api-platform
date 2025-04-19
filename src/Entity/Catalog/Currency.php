@@ -18,8 +18,9 @@ use ApiPlatform\Metadata\ApiFilter;
         new GetCollection(
             normalizationContext: [
                 'groups' => ['currency:read']
-            ]
-            ),
+            ],
+            order: ['isActive' => 'DESC']
+        ),
         new Patch(
             denormalizationContext: [
                 'groups' => ['currency:update']

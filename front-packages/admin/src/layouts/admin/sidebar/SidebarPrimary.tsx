@@ -67,57 +67,55 @@ const SidebarPrimary = () => {
       </div>
       <div className="flex grow shrink-0">
         <div
-          className="scrollable-y-hover grow gap-2.5 shrink-0 flex ps-4 flex-col"
+          className="scrollable-y-hover grow gap-2.5 shrink-0 flex flex-col"
           style={{
             height: `${scrollableHeight}px`
           }}
         >
           {MENU_ROOT.map((item, index) => (
             <MenuItem key={index}>
-            <MenuLink
-              path={item.path}
-              className={
-                `${item === selectedMenuItem && 'active bg-light text-primary border-gray-200'}
-                rounded-[9px]                
-                border 
-                border-transparent
-                menu-item-active:border-gray-200 
-                menu-item-active:bg-light 
-                menu-link-hover:bg-light  
-                menu-link-hover:border-gray-200
-                w-[62px]
-                h-[60px]
-                flex 
-                flex-col 
-                justify-center 
-                items-center 
-                gap-1 p-2
-              `}>
-              {item.icon && (
-                <MenuIcon
+              <MenuLink
+                path={item.path}
+                className={
+                  `${item === selectedMenuItem && 'active bg-gray-400 text-red-600 '}
+                  border 
+                  border-transparent
+                  menu-item-active:border-gray-200 
+                  menu-item-active:bg-light 
+                  menu-link-hover:bg-gray-400
+                  w-[94px]
+                  h-[60px]
+                  flex 
+                  flex-col 
+                  justify-center 
+                  items-center 
+                  gap-1 p-2
+                `}>
+                {item.icon && (
+                  <MenuIcon
+                    className="
+                      menu-item-here:text-primary
+                      menu-item-active:text-primary
+                      menu-link-hover:text-primary
+                      text-gray-600
+                    "
+                  >
+                    <KeenIcon icon={item.icon} className="text-1.5xl" />
+                  </MenuIcon>
+                )}
+                <MenuTitle
                   className="
                     menu-item-here:text-primary
                     menu-item-active:text-primary
                     menu-link-hover:text-primary
+                    font-medium
+                    text-xs
                     text-gray-600
                   "
                 >
-                  <KeenIcon icon={item.icon} className="text-1.5xl" />
-                </MenuIcon>
-              )}
-              <MenuTitle
-                className="
-                  menu-item-here:text-primary
-                  menu-item-active:text-primary
-                  menu-link-hover:text-primary
-                  font-medium
-                  text-xs
-                  text-gray-600
-                "
-              >
-                {item.title}
-              </MenuTitle>
-            </MenuLink>
+                  {item.title}
+                </MenuTitle>
+              </MenuLink>
           </MenuItem>
           ))}
         </div>

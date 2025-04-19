@@ -19,6 +19,12 @@ export type TDataGridRequestParams = {
   columnFilters?: ColumnFiltersState;
 };
 
+interface paginationView {
+  first: string,
+  last: string,
+  next:string,
+  previous?: string
+}
 export interface TDataGridProps<TData extends object> {
   columns: any[];
   data?: TData[];
@@ -40,6 +46,7 @@ export interface TDataGridProps<TData extends object> {
     };
   };
   pagination?: {
+    view: paginationView,
     page?: number;
     size?: number;
     sizes?: number[];

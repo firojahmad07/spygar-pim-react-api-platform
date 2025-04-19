@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import { useMemo, useState, useEffect, useRef, useContext } from 'react';
-import apiFetcher from '@/fetcher/apiFetcher';
 import { Link } from 'react-router-dom';
 import { DataGrid, DataGridColumnHeader, KeenIcon} from '@/components';
 import { ColumnDef} from '@tanstack/react-table';
@@ -13,12 +12,27 @@ interface ILocalesData {
   fullName: string;
   email: string,
   username: string,
-  status: boolean
+  status: boolean,
+  lastLogin: string
 }
 
-const Users = () => {
-  const [usersData, setUsersData] = useState([]);
-  const [numberOfItems, setItems] = useState(0);
+interface IUsersData {
+  id: string;
+  fullName: string;
+  email: string,
+  username: string,
+  status: boolean,
+  lastLogin: string
+
+}
+
+type UsersProps = {
+  usersData: IUsersData[]; // or a more specific type
+  numberOfItems: number;
+};
+
+
+const Users = ({usersData, numberOfItems} : UsersProps)  => {
   const [checked, setChecked] = useState(false);
   const [reportUserModalOpen, setReportUserModalOpen] = useState(false);
   const itemRef = useRef<any>(null);
@@ -31,17 +45,7 @@ const Users = () => {
     setReportUserModalOpen(false);
   };
 
-  const loadUsers = async () => {
-    await apiFetcher.get("/users")
-      .then((response:any) => {
-        setItems(response.totalItems);
-        setUsersData(response.member);
-      })
-      .catch(console.error);
-  }
-  useEffect(() => {
-    loadUsers();
-  }, []);
+
 
   const checkedChangeHandler = () => {
     setChecked((prev) => {
@@ -53,7 +57,7 @@ const Users = () => {
 
   }
 
-  const columns = useMemo<ColumnDef<ILocalesData>[]>(
+  const columns = useMemo<ColumnDef<IUsersData>[]>(
     () => [
       {
         accessorFn: (row) => row.id,
@@ -109,7 +113,7 @@ const Users = () => {
         header: ({ column }) => <DataGridColumnHeader title="Active" column={column} />,
         enableSorting: false,
         cell: (info) => {
-          setChecked(true);
+          // setChecked(true);
           // setChecked(info.row.original.status);
           return (
             <label className="switch">
@@ -133,7 +137,7 @@ const Users = () => {
         cell: () => {                    
           return (
             <div className="btn">              
-              <button className="btn btn-light btn-sm" onClick={handleReportUserModalOpen}>
+              <button className="btn btn-light btn-sm">
                 <i className="ki-filled ki-trash"></i>
               </button>
               <Link to={`/account/1/user-profile`} className="btn btn-light btn-sm">
@@ -182,7 +186,7 @@ const Users = () => {
       data={usersData}
       rowSelection={true}
       pagination={{ size: 10 }}
-      sorting={[{ id: 'code', desc: false }]}
+      sorting={[{ id: 'id', desc: false }]}
       toolbar={<Toolbar />}
       layout={{ card: false }}
     />
