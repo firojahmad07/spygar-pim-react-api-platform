@@ -21,7 +21,6 @@ use App\Entity\Storage\Asset;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[UniqueEntity(fields: ["username"], groups: ['user:create', 'user:update'])]
 #[UniqueEntity(fields: ["email"], groups: ['user:create', 'user:update'])]
 #[ApiResource(
     normalizationContext:[
@@ -35,6 +34,7 @@ use App\Entity\Storage\Asset;
         ),
         new GetCollection(
             security: "is_granted('IS_AUTHENTICATED_FULLY')"
+            
         ),
 
         new Post(
@@ -83,11 +83,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['user:read', 'user:create', 'user:update'])]
     private ?string $lastName = null;
 
-    #[ORM\Column(length: 150)]
-    #[Assert\NotBlank(groups:['user:create', 'user:update'])]
-    #[Groups(['user:read', 'user:create', 'user:update'])]
-    private ?string $username = null;
-
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(groups:['user:create', 'user:update'])]
     #[Assert\Email(groups:['user:create', 'user:update'])]
@@ -96,7 +91,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'json')]
     #[Assert\NotBlank(groups:['user:create', 'user:update'])]
-    #[Groups(['user:create', 'user:update'])]
+    #[Groups(['user:read', 'user:create', 'user:update'])]
     private array $roles;
 
     #[ORM\Column(length: 255)]
@@ -203,21 +198,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->firstName . " " . $this->lastName;
     }
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
+    
 
     public function getUserIdentifier(): string
     {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): static
-    {
-        $this->username = $username;
-
-        return $this;
+        // return $this->email;
+        return $this->email;
     }
 
     public function getEmail(): ?string

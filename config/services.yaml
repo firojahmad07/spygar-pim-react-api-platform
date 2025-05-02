@@ -27,8 +27,14 @@ services:
     App\EventListener\LoginListener:
         tags:
             - { name: 'kernel.event_listener', event: 'Symfony\Component\Security\Http\Event\LoginSuccessEvent' }
+
+    App\EventListener\UserLoginValidatorListener:
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccess }
+
     # Validators
     App\Validator\Constraints\AssetNotUsedAsAvatarValidator:
         tags: ['validator.constraint_validator']      
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    
