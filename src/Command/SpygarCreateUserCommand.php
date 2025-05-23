@@ -13,7 +13,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\Security\User;
 use App\Entity\Security\Role;
 use App\Repository\Security\UserRepository;
-use App\Repository\Security\RoleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 
@@ -26,7 +25,6 @@ class SpygarCreateUserCommand extends Command
     public function __construct(
         private UserPasswordHasherInterface $userPasswordHasher,
         private UserRepository $userRepository,
-        private RoleRepository $roleRepository,
         private EntityManagerInterface $entityManager
     ) {
         parent::__construct();
@@ -74,16 +72,12 @@ class SpygarCreateUserCommand extends Command
     {
         $users = static::USER_FIXTURE_DATA();
         foreach ($users as $user) {
-            $userInstance = $this->userRepository->findOneBy([
-                'username' => $user['username'],
-                'email' => $user['email']
-            ]);
+            $userInstance = $this->userRepository->findOneBy(['email' => $user['email']]);
 
             $userInstance = !empty($userInstance) ? $userInstance : new User;
 
             $userInstance->setFirstName($user['firstName']);
             $userInstance->setLastName($user['lastName']);
-            $userInstance->setUsername($user['username']);
             $userInstance->setEmail($user['email']);
 
             $password = $this->userPasswordHasher->hashPassword($userInstance, $user['password']);
@@ -117,13 +111,22 @@ class SpygarCreateUserCommand extends Command
             [
                 "firstName" => "John",
                 "lastName" => "Doe",
-                "username" => "admin",
                 "email" => "john@spygar.com",
-                "password" => "admin123",
+                "password" => "Admin123",
                 "userType" => "ADMIN",
                 "status" => true,
                 "created" => new \DateTime(),
                 "roles" => ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']
+            ],
+            [
+                "firstName" => "Firoj",
+                "lastName" => "Ahmad",
+                "email" => "firoj.ahmad@spygar.com",
+                "password" => "Admin123",
+                "userType" => "CUSTOMER",
+                "status" => true,
+                "created" => new \DateTime(),
+                "roles" => ['ROLE_ADMIN']
             ]
         ];
     }

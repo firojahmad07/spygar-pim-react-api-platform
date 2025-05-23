@@ -8,7 +8,6 @@ import { DropdownChat } from '@/partials/dropdowns/chat';
 import { DropdownApps } from '@/partials/dropdowns/apps';
 import { useLanguage } from '@/i18n';
 import { MENU_ROOT } from '@/config';
-
 interface IMenuItem {
   icon: string;
   label: string;

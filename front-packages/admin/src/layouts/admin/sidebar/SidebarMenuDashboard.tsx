@@ -60,52 +60,6 @@ const SidebarMenuDashboard = () => {
 
   const contextData = useContext(SidebarContext);
   const sideBarDataAvailable = contextData?.sidebarMenu.length != 0 ? true : false;
-  
-  const buildDropdown = () => {
-    return (
-      <Menu highlight={true} className="menu-default p-0 w-full px-2">
-        <MenuItem
-          className="w-full px-0.5"
-          toggle="dropdown"
-          trigger="hover"
-          dropdownProps={{
-            placement: isRTL() ? 'bottom-start' : 'bottom-end',
-            modifiers: [
-              {
-                name: 'offset',
-                options: {
-                  offset: isRTL() ? [4, 0] : [-4, 0] // [skid, distance]
-                }
-              }
-            ]
-          }}
-        >
-          <MenuToggle className="w-full btn btn-light btn-sm justify-between flex-nowrap">
-            <span className="flex items-center gap-1.5">
-              <KeenIcon icon="code" className="!text-md" />
-              Client API
-            </span>
-            <span className="flex items-center lg:ms-4">
-              <KeenIcon icon="down" className="!text-xs" />
-            </span>
-          </MenuToggle>
-
-          <MenuSub className="menu-default w-[170px] py-2">
-            {dropdownItems.map((item, index) => (
-              <MenuItem key={index} className={item.active ? 'active' : ''}>
-                <MenuLink path={item.path}>
-                  <MenuIcon>
-                    <KeenIcon icon={item.icon} />
-                  </MenuIcon>
-                  <MenuTitle>{item.title}</MenuTitle>
-                </MenuLink>
-              </MenuItem>
-            ))}
-          </MenuSub>
-        </MenuItem>
-      </Menu>
-    );
-  };
 
   const productFilter = () => {
     return (

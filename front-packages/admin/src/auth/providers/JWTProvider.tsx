@@ -13,7 +13,7 @@ import * as authHelper from '../_helpers';
 import { type AuthModel, type UserModel } from '@/auth';
 
 const API_URL = import.meta.env.VITE_APP_API_URL;
-export const LOGIN_URL = `${API_URL}/login_check`;
+export const LOGIN_URL = `${API_URL}/login/admin`;
 export const REGISTER_URL = `${API_URL}/register`;
 export const FORGOT_PASSWORD_URL = `${API_URL}/forgot-password`;
 export const RESET_PASSWORD_URL = `${API_URL}/reset-password`;
@@ -26,14 +26,14 @@ interface AuthContextProps {
   saveAuth: (auth: AuthModel | undefined) => void;
   currentUser: UserModel | undefined;
   setCurrentUser: Dispatch<SetStateAction<UserModel | undefined>>;
-  login: (username: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   loginWithGoogle?: () => Promise<void>;
   loginWithFacebook?: () => Promise<void>;
   loginWithGithub?: () => Promise<void>;
-  register: (username: string, password: string, password_confirmation: string) => Promise<void>;
-  requestPasswordResetLink: (username: string) => Promise<void>;
+  register: (email: string, password: string, password_confirmation: string) => Promise<void>;
+  requestPasswordResetLink: (email: string) => Promise<void>;
   changePassword: (
-    username: string,
+    email: string,
     token: string,
     password: string,
     password_confirmation: string
@@ -71,10 +71,10 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const login = async (username: string, password: string) => {
+  const login = async (email: string, password: string) => {
     try {
       const { data: auth } = await axios.post<AuthModel>(LOGIN_URL, {
-        username,
+        email,
         password
       });
       saveAuth(auth);
@@ -86,10 +86,10 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const register = async (username: string, password: string, password_confirmation: string) => {
+  const register = async (email: string, password: string, password_confirmation: string) => {
     try {
       const { data: auth } = await axios.post(REGISTER_URL, {
-        username,
+        email,
         password,
         password_confirmation
       });
@@ -102,20 +102,20 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const requestPasswordResetLink = async (username: string) => {
+  const requestPasswordResetLink = async (email: string) => {
     await axios.post(FORGOT_PASSWORD_URL, {
-      username
+      email
     });
   };
 
   const changePassword = async (
-    username: string,
+    email: string,
     token: string,
     password: string,
     password_confirmation: string
   ) => {
     await axios.post(RESET_PASSWORD_URL, {
-      username,
+      email,
       token,
       password,
       password_confirmation

@@ -2,21 +2,41 @@
 <html class="h-full" lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
-		<link rel="icon" href="/media/app/favicon.ico" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta charSet="utf-8" />
-		<meta name="description" content="" />
-		<meta name="keywords" content="keenthemes,react,material,kit,application,dashboard,admin,template" />
-		<meta name="author" content="Metronic - Tailwind React Template" />
-    <style type="text/css">
- 
+    <link rel="icon" href="/media/app/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <meta
+      name="keywords"
+      content="keenthemes,react,material,kit,application,dashboard,admin,template"
+    />
+    <meta name="author" content="Metronic - Tailwind React Template" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"
+    />
+    <style>
+      .dark body {
+        background-color: hsl(240 10% 4%);
+      }
     </style>
-		<link rel="preconnect" href="https://fonts.gstatic.com" />
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />    
-    <script type="module" crossorigin src="/build/shop-bundle.js"></script>
-    <link rel="stylesheet" crossorigin href="/build/shop-bundle.css">
+    <script>
+      (function () {
+        try {
+          const theme = localStorage.getItem('theme') || 'system';
+          const prefersDark = window.matchMedia(
+            '(prefers-color-scheme: dark)',
+          ).matches;
+          const isDarkMode =
+            theme === 'dark' || (theme === 'system' && prefersDark);
+          if (isDarkMode) document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
+    <script type="module" crossorigin src="/build/store-bundle.js"></script>
+    <link rel="stylesheet" crossorigin href="/build/store-bundle.css">
   </head>
-  <body class="antialiased flex h-full text-base text-gray-700" style="overflow:visible !important; margin-right:0 !important; position:static !important;">
-    <div class="flex grow" id="root"></div> 
-  </body>  
+  <body class="text-foreground bg-background flex h-full text-base antialiased">
+    <div class="flex grow" id="root"></div>
+  </body>
 </html>

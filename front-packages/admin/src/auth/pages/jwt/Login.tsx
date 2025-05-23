@@ -10,7 +10,7 @@ import { useLayout } from '@/providers';
 import { Alert } from '@/components';
 
 const loginSchema = Yup.object().shape({
-  username: Yup.string()
+  email: Yup.string()
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
     .required('Email is required'),
@@ -22,10 +22,11 @@ const loginSchema = Yup.object().shape({
 });
 
 const initialValues = {
-  username: 'admin',
-  password: 'admin123',
+  email: 'firoj.ahmad@gmail.com',
+  password: 'Firoj123',
   remember: false
 };
+
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -46,12 +47,12 @@ const Login = () => {
           throw new Error('JWTProvider is required for this form.');
         }
 
-        await login(values.username, values.password);
+        await login(values.email, values.password);
 
         if (values.remember) {
-          localStorage.setItem('username', values.username);
+          localStorage.setItem('email', values.email);
         } else {
-          localStorage.removeItem('username');
+          localStorage.removeItem('email');
         }
 
         navigate(from, { replace: true });
@@ -76,27 +77,27 @@ const Login = () => {
         noValidate
       >
         <Alert variant="primary">
-          Use <span className="font-semibold text-gray-900">admin</span> username and{' '}
+          Use <span className="font-semibold text-gray-900">admin</span> email and{' '}
           <span className="font-semibold text-gray-900">admin123</span> password.
         </Alert>
 
         {formik.status && <Alert variant="danger">{formik.status}</Alert>}
 
         <div className="flex flex-col gap-1">
-          <label className="form-label text-gray-900">Username</label>
+          <label className="form-label text-gray-900">email</label>
           <label className="input">
             <input
-              placeholder="Enter username"
+              placeholder="Enter email"
               autoComplete="off"
-              {...formik.getFieldProps('username')}
+              {...formik.getFieldProps('email')}
               className={clsx('form-control', {
-                'is-invalid': formik.touched.username && formik.errors.username
+                'is-invalid': formik.touched.email && formik.errors.email
               })}
             />
           </label>
-          {formik.touched.username && formik.errors.username && (
+          {formik.touched.email && formik.errors.email && (
             <span role="alert" className="text-danger text-xs mt-1">
-              {formik.errors.username}
+              {formik.errors.email}
             </span>
           )}
         </div>
