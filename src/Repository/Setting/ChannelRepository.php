@@ -23,7 +23,6 @@ class ChannelRepository extends ServiceEntityRepository
 
     public function saveData(array $record) 
     {
-        dump($record);
         $channelInstance    = $this->findOneBy(['code' => $record['code']]);
         $categroyInstance   = $this->categoryRepository->findOneBy(['code' => $record['tree'], 'parent' => null]);
         $channelInstance    = !empty($channelInstance) ? $channelInstance : new Channel;

@@ -22,10 +22,10 @@ use App\Installer\Reader\CsvFileReader;
 )]
 class SpygarPimInstallCommand extends Command
 {
-    // CONST LOCALE_FIXTURE_DATA = '/src/Installer/fixtures/locales.csv';
+    CONST LOCALE_FIXTURE_DATA = '/src/Installer/fixtures/locales.csv';
     CONST CURRENCY_FIXTURE_DATA = '/src/Installer/fixtures/currencies.csv';
     CONST CATEGORY_FIXTURE_DATA = '/src/Installer/fixtures/categories.csv';
-    // CONST CHANNEL_FIXTURE_DATA = '/src/Installer/fixtures/channels.csv';
+    CONST CHANNEL_FIXTURE_DATA = '/src/Installer/fixtures/channels.csv';
     public function __construct(
         private KernelInterface $kernel,
         private CsvFileReader $csvFileReader,
@@ -48,10 +48,10 @@ class SpygarPimInstallCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        // $this->loadLocales();
+        $this->loadLocales();
         $this->loadCurrencies();
         $this->loadCategories();
-        // $this->loadChannels();
+        $this->loadChannels();
 
         $io = new SymfonyStyle($input, $output);
 
@@ -60,14 +60,14 @@ class SpygarPimInstallCommand extends Command
         return Command::SUCCESS;
     }
 
-    // public function loadLocales()
-    // {
-    //     $records = $this->csvFileReader->read($this->kernel->getProjectDir() . self::LOCALE_FIXTURE_DATA);
+    public function loadLocales()
+    {
+        $records = $this->csvFileReader->read($this->kernel->getProjectDir() . self::LOCALE_FIXTURE_DATA);
 
-    //     foreach($records as $record) {
-    //         $this->localeRepository->saveData($record);
-    //     }
-    // }
+        foreach($records as $record) {
+            $this->localeRepository->saveData($record);
+        }
+    }
 
     public function loadCurrencies()
     {
@@ -84,12 +84,12 @@ class SpygarPimInstallCommand extends Command
             $this->categoryRepository->saveData($record);
         }
     }
-    // public function loadChannels()
-    // {
-    //     $records = $this->csvFileReader->read($this->kernel->getProjectDir() . self::CHANNEL_FIXTURE_DATA, ";");
+    public function loadChannels()
+    {
+        $records = $this->csvFileReader->read($this->kernel->getProjectDir() . self::CHANNEL_FIXTURE_DATA, ";");
         
-    //     foreach($records as $record) {
-    //         $this->channelRepository->saveData($record);
-    //     }
-    // }
+        foreach($records as $record) {
+            $this->channelRepository->saveData($record);
+        }
+    }
 }
