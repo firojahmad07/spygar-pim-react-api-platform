@@ -34,7 +34,8 @@ services:
 
     # Validators
     App\Validator\Constraints\AssetNotUsedAsAvatarValidator:
-        tags: ['validator.constraint_validator']      
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
-    
+        tags: ['validator.constraint_validator']
+
+    App\EventSubscriber\MetaDataSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }

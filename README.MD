@@ -19,6 +19,7 @@
 
 
 ## Installation
+
 ```
 - composer install
 - yarn install
@@ -30,6 +31,9 @@ php bin/console spygar:pim:install
 ```
 ## Generate jwt pem files
 ```
-- openssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:2048
+- mkdir -p config/jwt
+- openssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:4096
 - openssl rsa -in private.pem -pubout -out public.pem
+- sudo chown -R root:root ./config/jwt/**
+- sudo chmod -R 777 ./config/jwt/**
 ```

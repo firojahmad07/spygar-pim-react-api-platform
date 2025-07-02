@@ -8,8 +8,12 @@ use App\Entity\Security\User;
 
 class UserLoginValidatorListener
 {
-    public function __construct(private RequestStack $requestStack) {}
 
+    public function __construct(
+        private RequestStack $requestStack
+    ) {
+    }
+    
     public function onAuthenticationSuccess(AuthenticationSuccessEvent $event): void
     {
         $user = $event->getUser();
