@@ -35,7 +35,3 @@ services:
     # Validators
     App\Validator\Constraints\AssetNotUsedAsAvatarValidator:
         tags: ['validator.constraint_validator']
-
-    App\EventSubscriber\MetaDataSubscriber:
-        tags:
-            - { name: 'kernel.event_subscriber' }
